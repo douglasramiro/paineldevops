@@ -15,7 +15,7 @@ public class SorteioService {
     private final ParticipanteRepository participanteRepository;
 
     public Participante sortear(){
-        return retornarFixo();
+        return sortearDoBanco();
     }
 
     public Participante sortearDoBanco(){
