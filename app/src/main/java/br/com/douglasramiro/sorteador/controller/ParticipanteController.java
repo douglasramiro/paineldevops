@@ -21,6 +21,7 @@ import javax.validation.Valid;
 @RequestMapping(value = "/participante",
         produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class ParticipanteController{
 
     private final ParticipanteMapper mapper;
