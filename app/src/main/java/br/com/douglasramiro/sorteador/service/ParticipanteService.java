@@ -34,6 +34,7 @@ public class ParticipanteService {
         List<Participante> participantes = participanteRepository.findAllByOrderByNome();
         participantes.forEach(p -> {
             p.setCpf("xxx.xxx."+p.getCpf().substring(6,9)+"-"+p.getCpf().substring(9,11));
+            p.setEmail("xxx"+p.getEmail().substring(3));
         });
         return participantes;
     }
