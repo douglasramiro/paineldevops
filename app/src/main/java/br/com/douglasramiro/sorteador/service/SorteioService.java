@@ -28,7 +28,7 @@ public class SorteioService {
         return Participante.builder()
                 .nome("Douglas Ramiro")
                 .cpf("xxx.xxx.131-40")
-                .email"contato@douglasramiro.com.br")
+                .email("contato@douglasramiro.com.br")
                 .build();
     }
 }
