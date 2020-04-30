@@ -1,0 +1,31 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: openjdk11
+      docker: 18
+    commands:
+      - apt-get -y install moreutils # Para usar o comando 'sponge' posteriormente
+      - cd app && mvn clean install && cd .. 
+  build:
+    commands:
+      - $(aws ecr get-login --no-include-email --region $AWS_REGION) # Autenticação no serviço AWS ECR
+      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) # Extrai os 7 primeiros caracteres do id do commit para usar como tag da imagem
+      - docker build -t $ECR_REPO:latest .
+      - docker tag $ECR_REPO:latest $ECR_REPO:$IMAGE_TAG
+      - aws cloudformation package --template-file template.yaml --s3-bucket $S3_BUCKET --output-template-file template-output.yaml
+  post_build:
+    commands:
+      - docker push $ECR_REPO:latest # Enviando a imagem para o AWS ECR
+      - docker push $ECR_REPO:$IMAGE_TAG
+      - jq '.Parameters.ImageTag = "'$IMAGE_TAG'"' config.json | sponge config.json # Muda a tag de imagem no arquivo config.json
+
+artifacts:
+  files: # Artefatos que devem ser mantidos para a próxima etapa. Os outros serão descartados
+    - template-output.yaml
+    - config.json
+
+cache:
+  paths:
+    - '/root/.m2/**/*' # Faz o cache das dependencias do maven para um build mais rápido.

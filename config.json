@@ -1,0 +1,6 @@
+{
+    "Parameters": {
+      "DockerImageRepository": "painelsoujava-ecs-image",
+      "ImageTag": "latest"
+    }
+  }
