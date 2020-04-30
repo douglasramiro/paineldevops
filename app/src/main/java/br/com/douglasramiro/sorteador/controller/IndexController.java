@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping(value = "/",
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 public class IndexController {
 
     @GetMapping
-    public LocalDateTime index(){
-        return LocalDateTime.now();
+    public String index(){
+        return "Server up: "+LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
     }
 }
