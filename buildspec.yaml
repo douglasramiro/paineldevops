@@ -6,7 +6,6 @@ phases:
       java: openjdk11
       docker: 18
     commands:
-      - apt-get -y install moreutils # Para usar o comando 'sponge' posteriormente
       - cd app && mvn clean install && cd .. 
   build:
     commands:
@@ -19,7 +18,8 @@ phases:
     commands:
       - docker push $ECR_REPO:latest # Enviando a imagem para o AWS ECR
       - docker push $ECR_REPO:$IMAGE_TAG
-      - jq '.Parameters.ImageTag = "'$IMAGE_TAG'"' config.json | sponge config.json # Muda a tag de imagem no arquivo config.json
+      - jq '.Parameters.ImageTag = "'$IMAGE_TAG'"' config.json > tmp.json # Muda a tag de imagem no arquivo config.json
+      - mv tmp.json config.json
 
 artifacts:
   files: # Artefatos que devem ser mantidos para a próxima etapa. Os outros serão descartados
