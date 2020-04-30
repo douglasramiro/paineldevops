@@ -15,8 +15,19 @@ public class SorteioService {
     private final ParticipanteRepository participanteRepository;
 
     public Participante sortear(){
+        return retornarFixo();
+    }
+
+    public Participante sortearDoBanco(){
         List<Participante> participantes = participanteRepository.findAllByOrderByNome();
         Random randomNumberGenerator = new Random();
         return participantes.get(randomNumberGenerator.nextInt(participantes.size()));
+    }
+
+    public Participante retornarFixo(){
+        return Participante.builder()
+                .nome("Douglas Ramiro")
+                .cpf("xxx.xxx.131-40")
+                .build();
     }
 }

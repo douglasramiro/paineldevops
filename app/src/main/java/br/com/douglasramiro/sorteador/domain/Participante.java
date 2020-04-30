@@ -1,8 +1,6 @@
 package br.com.douglasramiro.sorteador.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -14,6 +12,9 @@ import javax.validation.constraints.NotEmpty;
 @Getter
 @Setter
 @ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Participante {
 
     @Id
