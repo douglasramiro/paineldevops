@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
@@ -30,4 +31,9 @@ public class Participante {
     @NotEmpty
     @CPF
     private String cpf;
+    
+    @Column
+    @NotEmpty
+    @Email
+    private String email;
 }
